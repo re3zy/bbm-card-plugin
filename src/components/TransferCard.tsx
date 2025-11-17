@@ -33,7 +33,8 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
   // Helper function to format numbers with commas
   const formatNumber = (value: string | number): string => {
     const num = typeof value === 'string' ? parseFloat(value) : value;
-    return isNaN(num) ? String(value) : Math.round(num).toLocaleString();
+    if (isNaN(num)) return String(value);
+    return Math.round(num).toLocaleString();
   };
 
   // Helper function to safely get values with fallback
@@ -52,7 +53,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
       {/* Transfer Header */}
       <div style={{
         fontSize: '16px',
-        fontWeight: 600,
+        fontWeight: '600',
         marginBottom: '16px'
       }}>
         Transfer Recommendation {cardNumber ? `#${cardNumber}` : ''}
@@ -80,7 +81,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
       }}>
         <div style={{
           fontSize: '11px',
-          fontWeight: 600,
+          fontWeight: '600',
           color: '#6b7280',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
@@ -91,7 +92,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
         
         <div style={{
           fontSize: '16px',
-          fontWeight: 600,
+          fontWeight: '600',
           marginBottom: '4px'
         }}>
           {getValue("shortage_store_name", "Store Name")}
@@ -114,28 +115,28 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
         }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#6b7280', fontSize: '11px' }}>Current</span>
-            <span style={{ fontWeight: 600, fontSize: '15px', color: '#dc2626' }}>
+            <span style={{ fontWeight: '600', fontSize: '15px', color: '#dc2626' }}>
               {formatNumber(getValue("shortage_qty", 0))} units
             </span>
           </div>
           
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#6b7280', fontSize: '11px' }}>Needed</span>
-            <span style={{ fontWeight: 600, fontSize: '15px' }}>
+            <span style={{ fontWeight: '600', fontSize: '15px' }}>
               {formatNumber(getValue("shortage_needed", 0))} units
             </span>
           </div>
           
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#6b7280', fontSize: '11px' }}>Days Supply</span>
-            <span style={{ fontWeight: 600, fontSize: '15px', color: '#dc2626' }}>
+            <span style={{ fontWeight: '600', fontSize: '15px', color: '#dc2626' }}>
               {getValue("shortage_days", "0")} days ⚠️
             </span>
           </div>
           
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#6b7280', fontSize: '11px' }}>Trend</span>
-            <span style={{ fontWeight: 600, fontSize: '15px', color: '#dc2626' }}>
+            <span style={{ fontWeight: '600', fontSize: '15px', color: '#dc2626' }}>
               {formatTrend(getValue("shortage_trend", 0))}
             </span>
           </div>
@@ -147,7 +148,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
         textAlign: 'center',
         padding: '16px',
         fontSize: '18px',
-        fontWeight: 600,
+        fontWeight: '600',
         color: '#f59e0b'
       }}>
         ↓ Transfer {formatNumber(getValue("recommended_transfer_qty", 0))} units ↓
@@ -163,7 +164,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
       }}>
         <div style={{
           fontSize: '11px',
-          fontWeight: 600,
+          fontWeight: '600',
           color: '#6b7280',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
@@ -174,7 +175,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
         
         <div style={{
           fontSize: '16px',
-          fontWeight: 600,
+          fontWeight: '600',
           marginBottom: '4px'
         }}>
           {getValue("excess_store_name", "Store Name")}
@@ -198,7 +199,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
         }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#6b7280', fontSize: '11px' }}>Current</span>
-            <span style={{ fontWeight: 600, fontSize: '15px' }}>
+            <span style={{ fontWeight: '600', fontSize: '15px' }}>
               {formatNumber(getValue("excess_qty", 0))} units
             </span>
           </div>
@@ -212,14 +213,14 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
           
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#6b7280', fontSize: '11px' }}>Days Supply</span>
-            <span style={{ fontWeight: 600, fontSize: '15px' }}>
+            <span style={{ fontWeight: '600', fontSize: '15px' }}>
               {getValue("excess_days", "0")} days 📦
             </span>
           </div>
           
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#6b7280', fontSize: '11px' }}>Trend</span>
-            <span style={{ fontWeight: 600, fontSize: '15px' }}>
+            <span style={{ fontWeight: '600', fontSize: '15px' }}>
               {formatTrend(getValue("excess_trend", 0))}
             </span>
           </div>
@@ -235,7 +236,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
             borderRadius: '6px',
             border: 'none',
             fontSize: '15px',
-            fontWeight: 500,
+            fontWeight: '500',
             cursor: 'pointer',
             background: '#3b82f6',
             color: 'white',

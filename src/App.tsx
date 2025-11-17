@@ -1,16 +1,13 @@
 import { useMemo, useEffect } from "react";
 import TransferCardGrid from "./components/TransferCardGrid";
-import "./App.css";
 import {
   client,
   useConfig,
   useElementData,
-  usePaginatedElementData,
   useElementColumns,
   useVariable,
   useActionTrigger,
 } from "@sigmacomputing/plugin";
-import * as d3 from "d3";
 import { ExtendedColumnInfo, TransferRecommendation } from "./types";
 
 // Configure the Sigma editor panel with configuration options
@@ -69,11 +66,11 @@ function App() {
   const transferIdConfigId = (config as any)['p-TransferId'];
   const statusConfigId = (config as any)['p-Status'];
   
-  const [shortageKeyVar, setShortageKey] = useVariable(shortageKeyConfigId);
-  const [excessKeyVar, setExcessKey] = useVariable(excessKeyConfigId);
-  const [transferRecVar, setTransferRec] = useVariable(transferRecConfigId);
-  const [transferIdVar, setTransferId] = useVariable(transferIdConfigId);
-  const [statusVar, setStatus] = useVariable(statusConfigId);
+  const [, setShortageKey] = useVariable(shortageKeyConfigId);
+  const [, setExcessKey] = useVariable(excessKeyConfigId);
+  const [, setTransferRec] = useVariable(transferRecConfigId);
+  const [, setTransferId] = useVariable(transferIdConfigId);
+  const [, setStatus] = useVariable(statusConfigId);
   
   // Get action trigger callback
   const triggerTransferAction = useActionTrigger(config.transferAction);
@@ -101,26 +98,6 @@ function App() {
     if (sigmaData[firstColumnId].length === 0) return false;
     
     return true;
-  };
-
-  /**
-   * Helper function to find column ID by name
-   */
-  const findColumnId = (name: string): string | null => {
-    if (!columnInfo) return null;
-    for (const [id, info] of Object.entries(columnInfo)) {
-      if (info.name === name) return id;
-    }
-    return null;
-  };
-
-  /**
-   * Helper function to get column data by name
-   */
-  const getColumnData = (name: string): any[] | null => {
-    const columnId = findColumnId(name);
-    if (!columnId || !sigmaData || !sigmaData[columnId]) return null;
-    return sigmaData[columnId];
   };
 
   /**
@@ -152,7 +129,7 @@ function App() {
     // Step 1: Convert columnar data to row objects
     const inventoryRows = Array.from({ length: numRows }, (_, rowIndex) => {
       const row: any = {};
-      columnIds.forEach((columnId) => {
+      columnIds.forEach((columnId: string) => {
         const columnName = columnInfo[columnId].name;
         row[columnName] = sigmaData[columnId][rowIndex];
       });
@@ -300,11 +277,11 @@ function App() {
       data={transferData}
       minCardWidth="100%"
       cardNumber={cardIndex}
-      onSetShortageKey={setShortageKey}
-      onSetExcessKey={setExcessKey}
-      onSetTransferRec={setTransferRec}
-      onSetTransferId={setTransferId}
-      onSetStatus={setStatus}
+      onSetShortageKey={setShortageKey as (...values: unknown[]) => void}
+      onSetExcessKey={setExcessKey as (...values: unknown[]) => void}
+      onSetTransferRec={setTransferRec as (...values: unknown[]) => void}
+      onSetTransferId={setTransferId as (...values: unknown[]) => void}
+      onSetStatus={setStatus as (...values: unknown[]) => void}
       onTriggerAction={triggerTransferAction}
     />
   ) : null;

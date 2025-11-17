@@ -1,17 +1,17 @@
 import React from "react";
 import TransferCard from "./TransferCard";
-import { TransferRecommendation, TransferActionData } from "../types";
+import { TransferRecommendation } from "../types";
 
 // Interface for the grid component props
 interface TransferCardGridProps {
   data: TransferRecommendation[];
   minCardWidth: string;
-  cardNumber?: number; // The card index from config (1, 2, 3, etc.)
-  onSetShortageKey: (value: string | number) => void;
-  onSetExcessKey: (value: string | number) => void;
-  onSetTransferRec: (value: string | number) => void;
-  onSetTransferId: (value: string | number) => void;
-  onSetStatus: (value: string | number) => void;
+  cardNumber?: number;
+  onSetShortageKey: (...values: unknown[]) => void;
+  onSetExcessKey: (...values: unknown[]) => void;
+  onSetTransferRec: (...values: unknown[]) => void;
+  onSetTransferId: (...values: unknown[]) => void;
+  onSetStatus: (...values: unknown[]) => void;
   onTriggerAction: () => void;
 }
 
