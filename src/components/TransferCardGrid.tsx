@@ -62,7 +62,7 @@ const TransferCardGrid: React.FC<TransferCardGridProps> = ({
    * - p-Status: Set to "Warehouse Review"
    * Then triggers the action sequence in Sigma
    */
-  const handleInitiateTransfer = (transferData: any) => {
+  const handleInitiateTransfer = async (transferData: any) => {
     console.log("=== Initiating Transfer Request ===");
     
     try {
@@ -91,6 +91,11 @@ const TransferCardGrid: React.FC<TransferCardGridProps> = ({
       onSetStatus("Warehouse Review");
       
       console.log("✅ All controls set successfully!");
+      
+      // Wait for Sigma to process control updates before triggering action
+      // This delay ensures controls are fully updated in published mode
+      console.log("⏳ Waiting for controls to propagate...");
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       // Trigger the action sequence
       console.log("🚀 Triggering action sequence...");
