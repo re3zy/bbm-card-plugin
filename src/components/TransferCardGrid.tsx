@@ -95,7 +95,7 @@ const TransferCardGrid: React.FC<TransferCardGridProps> = ({
       // Wait for Sigma to process control updates before triggering action
       // This delay ensures controls are fully updated in published mode
       console.log("⏳ Waiting for controls to propagate...");
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
       // Trigger the action sequence
       console.log("🚀 Triggering action sequence...");
