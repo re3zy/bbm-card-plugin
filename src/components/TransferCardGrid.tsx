@@ -67,8 +67,9 @@ const TransferCardGrid: React.FC<TransferCardGridProps> = ({
    * 
    * Sets Sigma control values for the selected transfer WITHOUT triggering the action.
    * This allows the user to verify controls are set correctly before initiating.
+   * Adds delays between each control set to allow Sigma to process in published mode.
    */
-  const handlePrepareTransfer = (transferData: any) => {
+  const handlePrepareTransfer = async (transferData: any) => {
     console.log("=== Preparing Transfer (Setting Controls Only) ===");
     
     try {
@@ -80,18 +81,22 @@ const TransferCardGrid: React.FC<TransferCardGridProps> = ({
       const excessKey = transferData.excess_store_key || "";
       const transferQty = transferData.recommended_transfer_qty || 0;
       
-      // Set all control values
+      // Set all control values with delays between each to allow Sigma to process
       console.log("Setting p-shortageKey:", shortageKey);
       onSetShortageKey(shortageKey);
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       console.log("Setting p-excessKey:", excessKey);
       onSetExcessKey(excessKey);
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       console.log("Setting p-TransferRec:", transferQty);
       onSetTransferRec(transferQty);
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       console.log("Setting p-TransferId:", transferId);
       onSetTransferId(transferId);
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       console.log("Setting p-Status:", "Warehouse Review");
       onSetStatus("Warehouse Review");
