@@ -6,6 +6,7 @@ interface TransferCardProps {
   data: TransferRecommendation;
   cardNumber?: number;
   onInitiateTransfer?: (data: TransferRecommendation) => void;
+  onDetailsClick?: () => void;
 }
 
 /**
@@ -13,7 +14,7 @@ interface TransferCardProps {
  * 
  * Displays a single transfer recommendation card matching dashboard_mockup.html exactly
  */
-const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiateTransfer }) => {
+const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiateTransfer, onDetailsClick }) => {
   
   // Helper function to format trend with arrow
   const formatTrend = (trend: string | number): string => {
@@ -52,11 +53,46 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
     }}>
       {/* Transfer Header */}
       <div style={{
-        fontSize: '16px',
-        fontWeight: '600',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         marginBottom: '16px'
       }}>
-        Transfer Recommendation {cardNumber ? `#${cardNumber}` : ''}
+        <div style={{
+          fontSize: '16px',
+          fontWeight: '600'
+        }}>
+          Transfer Recommendation {cardNumber ? `#${cardNumber}` : ''}
+        </div>
+        {/* Info Button - Top Right */}
+        <button
+          onClick={() => onDetailsClick && onDetailsClick()}
+          style={{
+            width: '24px',
+            height: '24px',
+            borderRadius: '50%',
+            border: '1px solid #d1d5db',
+            background: '#f9fafb',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            color: '#6b7280',
+            transition: 'all 0.2s'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = '#e5e7eb';
+            e.currentTarget.style.borderColor = '#9ca3af';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = '#f9fafb';
+            e.currentTarget.style.borderColor = '#d1d5db';
+          }}
+          title="View Details"
+        >
+          ℹ
+        </button>
       </div>
       
       {/* Product Information */}

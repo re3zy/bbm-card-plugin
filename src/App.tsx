@@ -21,6 +21,7 @@ client.config.configureEditorPanel([
   { name: "p-TransferId", type: "variable" },
   { name: "p-Status", type: "variable" },
   { name: "transferAction", type: "action-trigger" },
+  { name: "detailsAction", type: "action-trigger" },
   {
     name: "cardIndex",
     type: "dropdown",
@@ -72,8 +73,9 @@ function App() {
   const [, setTransferId] = useVariable(transferIdConfigId);
   const [, setStatus] = useVariable(statusConfigId);
   
-  // Get action trigger callback
+  // Get action trigger callbacks
   const triggerTransferAction = useActionTrigger(config.transferAction);
+  const triggerDetailsAction = useActionTrigger(config.detailsAction);
 
   // Dynamically update the root container padding based on config
   useEffect(() => {
@@ -218,7 +220,9 @@ function App() {
     const deduplicatedRecs = new Map<string, TransferRecommendation>();
     
     recommendations.forEach(rec => {
-      const key = `${rec.product_name}|${rec.shortage_store_name}`;
+      // Include excess_store_name in key so each shortage→excess pair is unique
+      // This allows multiple cards for the same shortage when filtered by AI recommendations
+      const key = `${rec.product_name}|${rec.shortage_store_name}|${rec.excess_store_name}`;
       
       // If we haven't seen this shortage/product combo, add it
       if (!deduplicatedRecs.has(key)) {
@@ -283,6 +287,7 @@ function App() {
       onSetTransferId={setTransferId as (...values: unknown[]) => void}
       onSetStatus={setStatus as (...values: unknown[]) => void}
       onTriggerAction={triggerTransferAction}
+      onDetailsAction={triggerDetailsAction}
     />
   ) : null;
 }

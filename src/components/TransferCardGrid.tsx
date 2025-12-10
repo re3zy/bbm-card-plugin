@@ -13,6 +13,7 @@ interface TransferCardGridProps {
   onSetTransferId: (...values: unknown[]) => void;
   onSetStatus: (...values: unknown[]) => void;
   onTriggerAction: () => void;
+  onDetailsAction: () => void;
 }
 
 /**
@@ -36,7 +37,8 @@ const TransferCardGrid: React.FC<TransferCardGridProps> = ({
   onSetTransferRec,
   onSetTransferId,
   onSetStatus,
-  onTriggerAction
+  onTriggerAction,
+  onDetailsAction
 }) => {
   
   /**
@@ -131,6 +133,7 @@ const TransferCardGrid: React.FC<TransferCardGridProps> = ({
           data={transfer}
           cardNumber={cardNumber || (index + 1)}
           onInitiateTransfer={handleInitiateTransfer}
+          onDetailsClick={onDetailsAction}
         />
       ))}
     </div>
