@@ -258,10 +258,10 @@ function App() {
           return aDays - bDays;
         }
         
-        // Tertiary sort: highest recommended transfer quantity
-        const aQty = Number(a.recommended_transfer_qty) || 0;
-        const bQty = Number(b.recommended_transfer_qty) || 0;
-        return bQty - aQty;
+        // Tertiary sort: highest excess available (matches AI recommendation logic)
+        const aAvail = Number(a.excess_available) || 0;
+        const bAvail = Number(b.excess_available) || 0;
+        return bAvail - aAvail;
       });
     
     // Return only the recommendation at the specified index (1-based)
