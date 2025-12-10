@@ -6,6 +6,7 @@ interface TransferCardProps {
   data: TransferRecommendation;
   cardNumber?: number;
   onInitiateTransfer?: (data: TransferRecommendation) => void;
+  onPrepareTransfer?: (data: TransferRecommendation) => void;
   onDetailsClick?: () => void;
 }
 
@@ -14,7 +15,7 @@ interface TransferCardProps {
  * 
  * Displays a single transfer recommendation card matching dashboard_mockup.html exactly
  */
-const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiateTransfer, onDetailsClick }) => {
+const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiateTransfer, onPrepareTransfer, onDetailsClick }) => {
   
   // Helper function to format trend with arrow
   const formatTrend = (trend: string | number): string => {
@@ -263,12 +264,36 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
         </div>
       </div>
 
-      {/* Action Button */}
-      <div style={{ marginTop: '16px', textAlign: 'center' }}>
+      {/* Action Buttons */}
+      <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'center', gap: '12px' }}>
+        <button
+          onClick={() => onPrepareTransfer && onPrepareTransfer(data)}
+          style={{
+            padding: '12px 24px',
+            borderRadius: '6px',
+            border: '1px solid #d1d5db',
+            fontSize: '15px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            background: 'white',
+            color: '#374151',
+            transition: 'all 0.2s'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = '#f3f4f6';
+            e.currentTarget.style.borderColor = '#9ca3af';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = 'white';
+            e.currentTarget.style.borderColor = '#d1d5db';
+          }}
+        >
+          Prepare Transfer
+        </button>
         <button
           onClick={() => onInitiateTransfer && onInitiateTransfer(data)}
           style={{
-            padding: '12px 32px',
+            padding: '12px 24px',
             borderRadius: '6px',
             border: 'none',
             fontSize: '15px',

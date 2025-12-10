@@ -62,6 +62,46 @@ const TransferCardGrid: React.FC<TransferCardGridProps> = ({
    * - p-Status: Set to "Warehouse Review"
    * Then triggers the action sequence in Sigma
    */
+  /**
+   * Handle the "Prepare Transfer" button click
+   * 
+   * Sets Sigma control values for the selected transfer WITHOUT triggering the action.
+   * This allows the user to verify controls are set correctly before initiating.
+   */
+  const handlePrepareTransfer = (transferData: any) => {
+    console.log("=== Preparing Transfer (Setting Controls Only) ===");
+    
+    try {
+      // Generate unique transfer ID
+      const transferId = generateTransferId();
+      
+      // Extract values from transfer data
+      const shortageKey = transferData.shortage_store_key || "";
+      const excessKey = transferData.excess_store_key || "";
+      const transferQty = transferData.recommended_transfer_qty || 0;
+      
+      // Set all control values
+      console.log("Setting p-shortageKey:", shortageKey);
+      onSetShortageKey(shortageKey);
+      
+      console.log("Setting p-excessKey:", excessKey);
+      onSetExcessKey(excessKey);
+      
+      console.log("Setting p-TransferRec:", transferQty);
+      onSetTransferRec(transferQty);
+      
+      console.log("Setting p-TransferId:", transferId);
+      onSetTransferId(transferId);
+      
+      console.log("Setting p-Status:", "Warehouse Review");
+      onSetStatus("Warehouse Review");
+      
+      console.log("✅ All controls set successfully! (Action NOT triggered)");
+    } catch (error) {
+      console.error("❌ Error during transfer preparation:", error);
+    }
+  };
+
   const handleInitiateTransfer = async (transferData: any) => {
     console.log("=== Initiating Transfer Request ===");
     
@@ -138,6 +178,7 @@ const TransferCardGrid: React.FC<TransferCardGridProps> = ({
           data={transfer}
           cardNumber={cardNumber || (index + 1)}
           onInitiateTransfer={handleInitiateTransfer}
+          onPrepareTransfer={handlePrepareTransfer}
           onDetailsClick={onDetailsAction}
         />
       ))}
