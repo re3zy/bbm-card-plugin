@@ -108,90 +108,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
         </span>
       </div>
 
-      {/* Shortage Store Section */}
-      <div style={{
-        background: '#fee2e2',
-        borderLeft: '4px solid #dc2626',
-        padding: '16px',
-        borderRadius: '8px',
-        marginBottom: '16px'
-      }}>
-        <div style={{
-          fontSize: '11px',
-          fontWeight: '600',
-          color: '#6b7280',
-          textTransform: 'uppercase',
-          letterSpacing: '0.5px',
-          marginBottom: '8px'
-        }}>
-          🔴 SHORTAGE STORE
-        </div>
-        
-        <div style={{
-          fontSize: '16px',
-          fontWeight: '600',
-          marginBottom: '4px'
-        }}>
-          {getValue("shortage_store_name", "Store Name")}
-        </div>
-        
-        <div style={{
-          fontSize: '13px',
-          color: '#6b7280',
-          marginBottom: '12px'
-        }}>
-          {getValue("shortage_city", "City")}
-        </div>
-        
-        {/* Metrics Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '12px',
-          fontSize: '13px'
-        }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ color: '#6b7280', fontSize: '11px' }}>Current</span>
-            <span style={{ fontWeight: '600', fontSize: '15px', color: '#dc2626' }}>
-              {formatNumber(getValue("shortage_qty", 0))} units
-            </span>
-          </div>
-          
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ color: '#6b7280', fontSize: '11px' }}>Needed</span>
-            <span style={{ fontWeight: '600', fontSize: '15px' }}>
-              {formatNumber(getValue("shortage_needed", 0))} units
-            </span>
-          </div>
-          
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ color: '#6b7280', fontSize: '11px' }}>Days Supply</span>
-            <span style={{ fontWeight: '600', fontSize: '15px', color: '#dc2626' }}>
-              {getValue("shortage_days", "0")} days ⚠️
-            </span>
-          </div>
-          
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ color: '#6b7280', fontSize: '11px' }}>Trend</span>
-            <span style={{ fontWeight: '600', fontSize: '15px', color: '#dc2626' }}>
-              {formatTrend(getValue("shortage_trend", 0))}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Transfer Arrow */}
-      <div style={{
-        textAlign: 'center',
-        padding: '16px',
-        fontSize: '18px',
-        fontWeight: '600',
-        color: '#f59e0b'
-      }}>
-        ↓ Transfer {formatNumber(getValue("recommended_transfer_qty", 0))} units ↓
-      </div>
-
-      {/* Excess Store Section */}
+      {/* Excess Store Section (Source - on top) */}
       <div style={{
         background: '#d1fae5',
         borderLeft: '4px solid #10b981',
@@ -207,7 +124,7 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
           letterSpacing: '0.5px',
           marginBottom: '8px'
         }}>
-          📦 EXCESS INVENTORY STORE
+          📦 SOURCE STORE (EXCESS INVENTORY)
         </div>
         
         <div style={{
@@ -259,6 +176,89 @@ const TransferCard: React.FC<TransferCardProps> = ({ data, cardNumber, onInitiat
             <span style={{ color: '#6b7280', fontSize: '11px' }}>Trend</span>
             <span style={{ fontWeight: '600', fontSize: '15px' }}>
               {formatTrend(getValue("excess_trend", 0))}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Transfer Arrow */}
+      <div style={{
+        textAlign: 'center',
+        padding: '16px',
+        fontSize: '18px',
+        fontWeight: '600',
+        color: '#f59e0b'
+      }}>
+        ↓ Transfer {formatNumber(getValue("recommended_transfer_qty", 0))} units ↓
+      </div>
+
+      {/* Shortage Store Section (Destination - on bottom) */}
+      <div style={{
+        background: '#fee2e2',
+        borderLeft: '4px solid #dc2626',
+        padding: '16px',
+        borderRadius: '8px',
+        marginBottom: '16px'
+      }}>
+        <div style={{
+          fontSize: '11px',
+          fontWeight: '600',
+          color: '#6b7280',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px',
+          marginBottom: '8px'
+        }}>
+          🔴 DESTINATION STORE (SHORTAGE)
+        </div>
+        
+        <div style={{
+          fontSize: '16px',
+          fontWeight: '600',
+          marginBottom: '4px'
+        }}>
+          {getValue("shortage_store_name", "Store Name")}
+        </div>
+        
+        <div style={{
+          fontSize: '13px',
+          color: '#6b7280',
+          marginBottom: '12px'
+        }}>
+          {getValue("shortage_city", "City")}
+        </div>
+        
+        {/* Metrics Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '12px',
+          fontSize: '13px'
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ color: '#6b7280', fontSize: '11px' }}>Current</span>
+            <span style={{ fontWeight: '600', fontSize: '15px', color: '#dc2626' }}>
+              {formatNumber(getValue("shortage_qty", 0))} units
+            </span>
+          </div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ color: '#6b7280', fontSize: '11px' }}>Needed</span>
+            <span style={{ fontWeight: '600', fontSize: '15px' }}>
+              {formatNumber(getValue("shortage_needed", 0))} units
+            </span>
+          </div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ color: '#6b7280', fontSize: '11px' }}>Days Supply</span>
+            <span style={{ fontWeight: '600', fontSize: '15px', color: '#dc2626' }}>
+              {getValue("shortage_days", "0")} days ⚠️
+            </span>
+          </div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ color: '#6b7280', fontSize: '11px' }}>Trend</span>
+            <span style={{ fontWeight: '600', fontSize: '15px', color: '#dc2626' }}>
+              {formatTrend(getValue("shortage_trend", 0))}
             </span>
           </div>
         </div>
